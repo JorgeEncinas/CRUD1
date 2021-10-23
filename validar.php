@@ -8,6 +8,7 @@ $query="SELECT * FROM usuarios WHERE numero_de_empleado = ':username' AND pass= 
 
 
 // Create connection
+//Added bind_param and $stmt->num_rows
 $conn = new mysqli($servername, $username, $password, $dbname);
 $stmt = $conn->prepare($query);
 $stmt->bind_param(":username", $username);
