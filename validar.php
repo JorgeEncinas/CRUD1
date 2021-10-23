@@ -19,6 +19,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 $stmt->execute();
+//If statement now checks something else.
 if ($stmt->num_rows > 0) {
   
   // output data of each row
