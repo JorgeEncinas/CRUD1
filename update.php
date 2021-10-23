@@ -4,20 +4,21 @@ validar();
 ?>
 <?php
 
-
-$query="SELECT column1, column2, column3, column4, column5 FROM table1 WHERE column1 = ".$_GET['colum1'].";";
+$column1GET = $_GET['colum1'];
+$query="SELECT column1, column2, column3, column4, column5 FROM table1 WHERE column1 = :column1";
 
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
-$result = $conn->query($query);
+$stmt = $conn->prepare($query);
+$stmt->bind_param(":column1", $column1GET);
+
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-
-if ( $conn->query($query)){
-    if ($result->num_rows > 0) {
+$stmt->execute();
+if ($stmt->num_rows() > 0){
       $row = $result->fetch_assoc();
       
       ?>
@@ -34,7 +35,6 @@ if ( $conn->query($query)){
 </fieldset>
     </form>
       <?php
-    }
 }else{
     echo "Algo salio mal <a href='https://localhost/crud.php'> clic aqui para volver al crud</a>" ;
     

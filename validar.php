@@ -1,18 +1,24 @@
 <?php
 include("./inc/settings.php");
-$query="SELECT * FROM usuarios WHERE numero_de_empleado = '$_POST[username]' AND pass= '$_POST[pwd]'";
+
+$username = $_POST['username'];
+$pass = $_POST['pwd'];
+$query="SELECT * FROM usuarios WHERE numero_de_empleado = ':username' AND pass= ':pwd'";
 
 
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
+$stmt = $conn->prepare($query);
+$stmt->bind_param(":username", $username);
+$stmt->bind_param(":pwd", $pwd);
+
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-
-$result = $conn->query($query);
-if ($result->num_rows > 0) {
+$stmt->execute();
+if ($stmt->num_rows > 0) {
   
   // output data of each row
   $row = $result->fetch_assoc();

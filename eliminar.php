@@ -13,13 +13,13 @@ $query="DELETE FROM table1 WHERE column1=:id;";
 $conn = new mysqli($servername, $username, $password, $dbname);
 $stmt = $conn->prepare($query);
 $stmt->bind_param(":id", $id);
-$stmt->execute();
+
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-
-if ( $stmt->num_rows() > 0){
+$stmt->execute();
+if ($stmt->num_rows() > 0){
     header("location:crud.php");
 }else{
     echo "Algo salio mal <a href='https://localhost/crud.php'> clic aqui para volver al crud</a>" ;
