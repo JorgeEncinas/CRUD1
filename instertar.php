@@ -1,5 +1,6 @@
 <?php
 
-print_r($_POST);
+$safeprint = htmlspecialchars(json_encode($_POST));
+print($safeprint);
 
 ?>
